@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class NelsonSiegelSvenssonCurve:
     beta1: float

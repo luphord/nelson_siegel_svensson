@@ -8,3 +8,5 @@ __version__ = '0.1.0'
 
 from .ns import NelsonSiegelCurve
 from .nss import NelsonSiegelSvenssonCurve
+
+__all__ = ['NelsonSiegelCurve', 'NelsonSiegelSvenssonCurve']
