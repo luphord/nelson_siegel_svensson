@@ -7,7 +7,7 @@
 import unittest
 from click.testing import CliRunner
 
-from nelson_siegel_svensson import nelson_siegel_svensson
+from nelson_siegel_svensson import NelsonSiegelCurve, NelsonSiegelSvenssonCurve
 from nelson_siegel_svensson import cli
 
 
@@ -20,8 +20,9 @@ class TestNelson_siegel_svensson(unittest.TestCase):
     def tearDown(self):
         """Tear down test fixtures, if any."""
 
-    def test_000_something(self):
-        """Test something."""
+    def test_curve_init(self):
+        NelsonSiegelCurve(0, 0, 0, 0)
+        NelsonSiegelSvenssonCurve(0, 0, 0, 0, 0, 0)
 
     def test_command_line_interface(self):
         """Test the CLI."""
