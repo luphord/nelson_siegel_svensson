@@ -25,15 +25,9 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    description="Implementation of the Nelson-Siinterest rate curve model",
+    description="Implementation of the Nelson-Siegel-Svensson interest rate curve model.",
     entry_points={
         'console_scripts': [
             'nelson_siegel_svensson=nelson_siegel_svensson.cli:main',

@@ -16,7 +16,7 @@ Nelson-Siegel-Svensson Model
 
 
 
-Implementation of the Nelson-Siinterest rate curve model
+Implementation of the Nelson-Siegel-Svensson interest rate curve model.
 
 
 * Free software: MIT license
