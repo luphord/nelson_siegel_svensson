@@ -7,6 +7,8 @@
 import unittest
 from click.testing import CliRunner
 
+import numpy as np
+
 from nelson_siegel_svensson import NelsonSiegelCurve, NelsonSiegelSvenssonCurve
 from nelson_siegel_svensson import cli
 
@@ -23,6 +25,12 @@ class TestNelson_siegel_svensson(unittest.TestCase):
     def test_curve_init(self):
         NelsonSiegelCurve(0, 0, 0, 0)
         NelsonSiegelSvenssonCurve(0, 0, 0, 0, 0, 0)
+
+    def test_nelson_siegel_curve(self):
+        y = NelsonSiegelCurve(0.017, -0.023, 0.24, 2.2)
+        print(y(0), y(1), y(2), y(3))
+        t = np.linspace(0, 10, 11)
+        print(y(t))
 
     def test_command_line_interface(self):
         """Test the CLI."""
