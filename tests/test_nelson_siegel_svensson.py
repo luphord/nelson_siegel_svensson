@@ -38,6 +38,14 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         t = np.linspace(0, 10, 11)
         print(y(t))
 
+    def test_mithril_parameters(self):
+        y = NelsonSiegelSvenssonCurve(0.04, -0.03, -0.02, -0.02, 2.1, 1.04)
+        y_expected = np.array([0.38, 0.63, 1.65, 2.58, 3.32]) / 100
+        y_actual = [y(1), y(2), y(5), y(10), y(25)]
+        print(y_expected)
+        print(y_actual)
+        # ToDo: they do not match. why?
+
     def test_command_line_interface(self):
         """Test the CLI."""
         runner = CliRunner()
