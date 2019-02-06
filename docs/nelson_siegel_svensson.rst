@@ -12,10 +12,18 @@ nelson\_siegel\_svensson.cli module
     :undoc-members:
     :show-inheritance:
 
-nelson\_siegel\_svensson.nelson\_siegel\_svensson module
---------------------------------------------------------
+nelson\_siegel\_svensson.ns module
+----------------------------------
 
-.. automodule:: nelson_siegel_svensson.nelson_siegel_svensson
+.. automodule:: nelson_siegel_svensson.ns
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nelson\_siegel\_svensson.nss module
+-----------------------------------
+
+.. automodule:: nelson_siegel_svensson.nss
     :members:
     :undoc-members:
     :show-inheritance:
