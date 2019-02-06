@@ -32,6 +32,12 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         t = np.linspace(0, 10, 11)
         print(y(t))
 
+    def test_nelson_siegel_svensson_curve(self):
+        y = NelsonSiegelSvenssonCurve(0.017, -0.023, 0.24, 0.1, 2.2, 3.1)
+        print(y(0), y(1), y(2), y(3))
+        t = np.linspace(0, 10, 11)
+        print(y(t))
+
     def test_command_line_interface(self):
         """Test the CLI."""
         runner = CliRunner()
