@@ -45,6 +45,13 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         print(y_expected)
         print(y_actual)
         # ToDo: they do not match. why?
+    
+    def test_ecb_2016_01_04_parameters(self):
+        y = NelsonSiegelSvenssonCurve(2.142562216, -2.649562216,
+                                      19.9532384206, -24.0677865973,
+                                      1.6568604918, 1.8145254889)
+        y_actual = y(np.arange(1, 31))
+        print(y_actual)
 
     def test_command_line_interface(self):
         """Test the CLI."""
