@@ -59,9 +59,8 @@ class TestNelson_siegel_svensson(unittest.TestCase):
                                1.542510, 1.565581, 1.586946, 1.606787,
                                1.625260, 1.642502])
         y_actual = y(np.arange(1, 31)).round(6)
-        print(y_expected)
-        print(y_actual)
-        # ToDo: they do not match. why?
+        self.assertTrue(np.allclose(y_expected, y_actual),
+                        'calculated yields differ from expected ones')
 
     def test_gilli_grosse_schumann_parameters(self):
         '''Test parameters from Gilli, Grosse, Schumann paper (Table 1)'''
