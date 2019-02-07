@@ -41,7 +41,7 @@ class TestNelson_siegel_svensson(unittest.TestCase):
     def test_mithril_parameters(self):
         y = NelsonSiegelSvenssonCurve(0.04, -0.03, -0.02, -0.02, 2.1, 1.04)
         y_expected = np.array([0.38, 0.63, 1.65, 2.58, 3.32]) / 100
-        y_actual = [y(1), y(2), y(5), y(10), y(25)]
+        y_actual = np.array([y(1), y(2), y(5), y(10), y(25)]).round(4)
         print(y_expected)
         print(y_actual)
         # ToDo: they do not match. why?
@@ -58,7 +58,7 @@ class TestNelson_siegel_svensson(unittest.TestCase):
                                1.428369, 1.460766, 1.490370, 1.517522,
                                1.542510, 1.565581, 1.586946, 1.606787,
                                1.625260, 1.642502])
-        y_actual = y(np.arange(1, 31))
+        y_actual = y(np.arange(1, 31)).round(6)
         print(y_expected)
         print(y_actual)
         # ToDo: they do not match. why?
