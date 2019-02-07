@@ -44,6 +44,26 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         self.assertTrue(np.allclose(y_array, y_individual),
                         'array valued yields differ from individual ones')
 
+    def test_nelson_siegel_at_0(self):
+        '''Test curve evaluation at time 0'''
+        y = NelsonSiegelCurve(0.017, -0.023, 0.24, 2.2)
+        y_actual = y(0.0)  # float time
+        self.assertEqual(y.beta0 + y.beta1, y_actual)
+        y_actual = y(0)  # int time
+        self.assertEqual(y.beta0 + y.beta1, y_actual)
+        y_actual = y(np.array([0.0]))  # array time
+        self.assertEqual(y.beta0 + y.beta1, y_actual[0])
+
+    def test_nelson_siegel_svensson_at_0(self):
+        '''Test curve evaluation at time 0'''
+        y = NelsonSiegelSvenssonCurve(0.017, -0.023, 0.24, 0.1, 2.2, 3.1)
+        y_actual = y(0.0)  # float time
+        self.assertEqual(y.beta0 + y.beta1, y_actual)
+        y_actual = y(0)  # int time
+        self.assertEqual(y.beta0 + y.beta1, y_actual)
+        y_actual = y(np.array([0.0]))  # array time
+        self.assertEqual(y.beta0 + y.beta1, y_actual[0])
+
     def test_mithril_parameters(self):
         y = NelsonSiegelSvenssonCurve(0.04, -0.03, -0.02, -0.02, 2.1, 1.04)
         y_expected = np.array([0.38, 0.63, 1.65, 2.58, 3.32]) / 100
