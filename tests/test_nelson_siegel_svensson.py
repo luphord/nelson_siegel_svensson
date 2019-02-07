@@ -45,13 +45,23 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         print(y_expected)
         print(y_actual)
         # ToDo: they do not match. why?
-    
+
     def test_ecb_2016_01_04_parameters(self):
         y = NelsonSiegelSvenssonCurve(2.142562216, -2.649562216,
                                       19.9532384206, -24.0677865973,
                                       1.6568604918, 1.8145254889)
+        y_expected = np.array([-0.410613, -0.366505, -0.290997, -0.174151,
+                               -0.028807, 0.129236, 0.287602, 0.438365,
+                               0.577291, 0.702713, 0.814554, 0.913619,
+                               1.001124, 1.078417, 1.146814, 1.207524,
+                               1.261617, 1.310018, 1.353515, 1.392777,
+                               1.428369, 1.460766, 1.490370, 1.517522,
+                               1.542510, 1.565581, 1.586946, 1.606787,
+                               1.625260, 1.642502])
         y_actual = y(np.arange(1, 31))
+        print(y_expected)
         print(y_actual)
+        # ToDo: they do not match. why?
 
     def test_command_line_interface(self):
         """Test the CLI."""
