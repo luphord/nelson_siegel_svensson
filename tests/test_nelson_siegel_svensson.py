@@ -63,6 +63,16 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         print(y_actual)
         # ToDo: they do not match. why?
 
+    def test_gilli_grosse_schumann_parameters(self):
+        '''Test parameters from Gilli, Grosse, Schumann paper (Table 1)'''
+        y = NelsonSiegelSvenssonCurve(2.05, -1.82, -2.03, 8.25, 0.87, 14.38)
+        t = np.array([1/4, 1/2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30])
+        y_expected = np.array([0.3, 0.4, 0.68, 1.27, 1.78, 2.2, 2.53, 2.8,
+                               3.03, 3.23, 3.4, 3.54, 4.04, 4.28, 4.38, 4.38])
+        y_actual = y(t).round(2)
+        self.assertTrue(np.allclose(y_expected, y_actual),
+                        'calculated yields differ from expected ones')
+
     def test_command_line_interface(self):
         """Test the CLI."""
         runner = CliRunner()
