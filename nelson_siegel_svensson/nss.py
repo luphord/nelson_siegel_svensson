@@ -16,15 +16,11 @@ class NelsonSiegelSvenssonCurve:
     tau1: float
     tau2: float
 
-    def zero(self, T):
-        beta0 = self.beta0
-        beta1 = self.beta1
-        beta2 = self.beta2
-        beta3 = self.beta3
+    def factors(self, T):
         tau1 = self.tau1
         tau2 = self.tau2
         if isinstance(T, Number) and T <= 0:
-            return beta0 + beta1
+            return 1, 0, 0
         elif isinstance(T, np.ndarray):
             zero_idx = T <= 0
             T[zero_idx] = EPS  # avoid warnings in calculations
@@ -33,10 +29,20 @@ class NelsonSiegelSvenssonCurve:
         factor1 = (1 - exp_tt1) / (T / tau1)
         factor2 = factor1 - exp_tt1
         factor3 = (1 - exp_tt2) / (T / tau2) - exp_tt2
-        res = beta0 + beta1*factor1 + beta2*factor2 + beta3*factor3
         if isinstance(T, np.ndarray):
             T[zero_idx] = 0
-            res[zero_idx] = beta0 + beta1
+            factor1[zero_idx] = 1
+            factor2[zero_idx] = 0
+            factor3[zero_idx] = 0
+        return factor1, factor2, factor3
+
+    def zero(self, T):
+        beta0 = self.beta0
+        beta1 = self.beta1
+        beta2 = self.beta2
+        beta3 = self.beta3
+        factor1, factor2, factor3 = self.factors(T)
+        res = beta0 + beta1*factor1 + beta2*factor2 + beta3*factor3
         return res
 
     def __call__(self, T):
