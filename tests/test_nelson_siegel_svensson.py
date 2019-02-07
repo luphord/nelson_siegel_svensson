@@ -26,17 +26,23 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         NelsonSiegelCurve(0, 0, 0, 0)
         NelsonSiegelSvenssonCurve(0, 0, 0, 0, 0, 0)
 
-    def test_nelson_siegel_curve(self):
+    def test_nelson_siegel_curve_array_vs_individual(self):
+        '''Test curve evaluation on array vs individual elements'''
         y = NelsonSiegelCurve(0.017, -0.023, 0.24, 2.2)
-        print(y(0), y(1), y(2), y(3))
         t = np.linspace(0, 10, 11)
-        print(y(t))
+        y_array = y(t)
+        y_individual = np.array([y(t_i) for t_i in t])
+        self.assertTrue(np.allclose(y_array, y_individual),
+                        'array valued yields differ from individual ones')
 
-    def test_nelson_siegel_svensson_curve(self):
+    def test_nelson_siegel_svensson_curve_array_vs_individual(self):
+        '''Test curve evaluation on array vs individual elements'''
         y = NelsonSiegelSvenssonCurve(0.017, -0.023, 0.24, 0.1, 2.2, 3.1)
-        print(y(0), y(1), y(2), y(3))
         t = np.linspace(0, 10, 11)
-        print(y(t))
+        y_array = y(t)
+        y_individual = np.array([y(t_i) for t_i in t])
+        self.assertTrue(np.allclose(y_array, y_individual),
+                        'array valued yields differ from individual ones')
 
     def test_mithril_parameters(self):
         y = NelsonSiegelSvenssonCurve(0.04, -0.03, -0.02, -0.02, 2.1, 1.04)
@@ -47,6 +53,7 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         # ToDo: they do not match. why?
 
     def test_ecb_2016_01_04_parameters(self):
+        '''Test curve evaluation for ECB AAA curve parameters on 2016-01-04'''
         y = NelsonSiegelSvenssonCurve(2.142562216, -2.649562216,
                                       19.9532384206, -24.0677865973,
                                       1.6568604918, 1.8145254889)
