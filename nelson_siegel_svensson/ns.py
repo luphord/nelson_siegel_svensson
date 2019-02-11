@@ -36,3 +36,7 @@ class NelsonSiegelCurve:
 
     def __call__(self, T):
         return self.zero(T)
+
+    def forward(self, T):
+        exp_tt0 = exp(-T/self.tau)
+        return self.beta0 + self.beta1*exp_tt0 + self.beta2*exp_tt0*T/self.tau
