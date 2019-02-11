@@ -34,12 +34,11 @@ class TestNelsonSiegelSvenssonCurveImplementation(unittest.TestCase):
         self.assertEqual(y.beta0 + y.beta1, y_actual[0])
 
     def test_mithril_parameters(self):
-        y = NelsonSiegelSvenssonCurve(0.04, -0.03, -0.02, -0.02, 2.1, 1.04)
+        y = NelsonSiegelSvenssonCurve(0.038, -0.032, -0.019, -0.02, 2.1, 1.04)
         y_expected = np.array([0.38, 0.63, 1.65, 2.58, 3.32]) / 100
         y_actual = np.array([y(1), y(2), y(5), y(10), y(25)]).round(4)
-        print(y_expected)
-        print(y_actual)
-        # ToDo: they do not match. why?
+        self.assertTrue(np.allclose(y_expected, y_actual, atol=5e-4),
+                        'calculated yields differ from expected ones')
 
     def test_ecb_2016_01_04_parameters(self):
         '''Test curve evaluation for ECB AAA curve parameters on 2016-01-04'''
