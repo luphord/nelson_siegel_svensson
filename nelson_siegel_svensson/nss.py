@@ -47,3 +47,9 @@ class NelsonSiegelSvenssonCurve:
 
     def __call__(self, T):
         return self.zero(T)
+
+    def forward(self, T):
+        exp_tt0 = exp(-T/self.tau1)
+        exp_tt1 = exp(-T/self.tau2)
+        return self.beta0 + self.beta1*exp_tt0 \
+            + self.beta2*exp_tt0*T/self.tau1 + self.beta3*exp_tt1*T/self.tau2

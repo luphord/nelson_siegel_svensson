@@ -66,3 +66,13 @@ class TestNelsonSiegelSvenssonCurveImplementation(unittest.TestCase):
         y_actual = y(t).round(2)
         self.assertTrue(np.allclose(y_expected, y_actual),
                         'calculated yields differ from expected ones')
+
+    def test_forward_against_zero_curve(self):
+        '''Test forward against zero curve implementation by integrating'''
+        t = np.linspace(0, 25, 500)
+        dt = t[1] - t[0]
+        y_by_fw_integration = np.cumsum(self.y.forward(t)) * dt / t
+        y_actual = self.y(t)
+        self.assertTrue(np.allclose(y_actual[100:], y_by_fw_integration[100:],
+                                    atol=1e-3))
+        # todo: numerical issue closer to 0?
