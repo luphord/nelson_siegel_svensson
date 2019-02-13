@@ -36,6 +36,14 @@ class NelsonSiegelCurve:
             factor2[zero_idx] = 0
         return factor1, factor2
 
+    def factor_matrix(self, T):
+        '''Factor loadings for time(s) T as matrix columns,
+           including constant column (=1.0)
+        '''
+        factor1, factor2 = self.factors(T)
+        constant = np.ones(T.size) if isinstance(T, np.ndarray) else 1
+        return np.stack([constant, factor1, factor2]).transpose()
+
     def zero(self, T):
         '''Zero rate(s) of this curve at time(s) T'''
         factor1, factor2 = self.factors(T)
