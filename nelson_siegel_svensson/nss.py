@@ -9,6 +9,11 @@ EPS = np.finfo(float).eps
 
 @dataclass
 class NelsonSiegelSvenssonCurve:
+    '''Implementation of a Nelson-Siegel-Svensson interest rate curve model.
+       This curve can be interpreted as a factor model with four
+       factors (including a constant).
+    '''
+
     beta0: float
     beta1: float
     beta2: float
@@ -17,6 +22,7 @@ class NelsonSiegelSvenssonCurve:
     tau2: float
 
     def factors(self, T):
+        '''Factor loadings for time(s) T, excluding constant'''
         tau1 = self.tau1
         tau2 = self.tau2
         if isinstance(T, Number) and T <= 0:
@@ -37,6 +43,7 @@ class NelsonSiegelSvenssonCurve:
         return factor1, factor2, factor3
 
     def zero(self, T):
+        '''Zero rate(s) of this curve at time(s) T'''
         beta0 = self.beta0
         beta1 = self.beta1
         beta2 = self.beta2
@@ -46,9 +53,11 @@ class NelsonSiegelSvenssonCurve:
         return res
 
     def __call__(self, T):
+        '''Zero rate(s) of this curve at time(s) T'''
         return self.zero(T)
 
     def forward(self, T):
+        '''Instantaneous forward rate(s) of this curve at time(s) T'''
         exp_tt0 = exp(-T/self.tau1)
         exp_tt1 = exp(-T/self.tau2)
         return self.beta0 + self.beta1*exp_tt0 \
