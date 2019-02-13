@@ -34,7 +34,7 @@ class TestNelsonSiegelCurveImplementation(unittest.TestCase):
 
     def test_forward_against_zero_curve(self):
         '''Test forward against zero curve implementation by integrating'''
-        t = np.linspace(0, 25, 500)
+        t = np.linspace(0.001, 25, 500)
         dt = t[1] - t[0]
         y_by_fw_integration = np.cumsum(self.y.forward(t)) * dt / t
         y_actual = self.y(t)
