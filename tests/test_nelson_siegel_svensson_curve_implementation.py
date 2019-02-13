@@ -76,3 +76,10 @@ class TestNelsonSiegelSvenssonCurveImplementation(unittest.TestCase):
         self.assertTrue(np.allclose(y_actual[100:], y_by_fw_integration[100:],
                                     atol=1e-3))
         # todo: numerical issue closer to 0?
+
+    def test_factor_matrix(self):
+        '''Test shape of factor matrix'''
+        n = 50
+        t = np.linspace(0, 25, n)
+        fmat = self.y.factor_matrix(t)
+        self.assertEqual((n, 4), fmat.shape)
