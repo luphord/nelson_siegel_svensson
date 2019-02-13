@@ -83,3 +83,4 @@ class TestNelsonSiegelSvenssonCurveImplementation(unittest.TestCase):
         t = np.linspace(0, 25, n)
         fmat = self.y.factor_matrix(t)
         self.assertEqual((n, 4), fmat.shape)
+        self.assertEqual((4,), self.y.factor_matrix(0.123).shape)

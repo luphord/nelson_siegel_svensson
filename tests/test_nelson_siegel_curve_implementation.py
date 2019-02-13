@@ -48,3 +48,4 @@ class TestNelsonSiegelCurveImplementation(unittest.TestCase):
         t = np.linspace(0, 25, n)
         fmat = self.y.factor_matrix(t)
         self.assertEqual((n, 3), fmat.shape)
+        self.assertEqual((3,), self.y.factor_matrix(0.123).shape)
