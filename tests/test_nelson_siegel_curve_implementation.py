@@ -31,3 +31,13 @@ class TestNelsonSiegelCurveImplementation(unittest.TestCase):
         self.assertEqual(y.beta0 + y.beta1, y_actual)
         y_actual = y(np.array([0.0]))  # array time
         self.assertEqual(y.beta0 + y.beta1, y_actual[0])
+
+    def test_forward_against_zero_curve(self):
+        '''Test forward again zero curve implementation by integrating'''
+        t = np.linspace(0, 25, 500)
+        dt = t[1] - t[0]
+        y_by_fw_integration = np.cumsum(self.y.forward(t)) * dt / t
+        y_actual = self.y(t)
+        self.assertTrue(np.allclose(y_actual[100:], y_by_fw_integration[100:],
+                                    atol=1e-3))
+        # todo: numerical issue closer to 0?
