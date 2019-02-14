@@ -19,7 +19,7 @@ def betas_ns_ols(t, y, tau):
     factors = curve.factor_matrix(t)
     res = lstsq(factors, y, rcond=None)
     beta = res[0]
-    return NelsonSiegelCurve(beta[0], beta[1], beta[2], tau)
+    return NelsonSiegelCurve(beta[0], beta[1], beta[2], tau), res
 
 
 def errorfn_ns_ols(t, y, tau):
@@ -28,7 +28,8 @@ def errorfn_ns_ols(t, y, tau):
        least squares given tau.
     '''
     _assert_same_shape(t, y)
-    return np.sum((betas_ns_ols(t, y, tau)(t) - y)**2)
+    curve, lstsq_res = betas_ns_ols(t, y, tau)
+    return np.sum((curve(t) - y)**2)
 
 
 def calibrate_ns_ols(t, y, tau0=2.0):
@@ -37,5 +38,6 @@ def calibrate_ns_ols(t, y, tau0=2.0):
        using ordinary least squares.
     '''
     _assert_same_shape(t, y)
-    res = minimize(lambda tau: errorfn_ns_ols(t, y, tau), tau0)
-    return betas_ns_ols(t, y, res.x[0])
+    opt_res = minimize(lambda tau: errorfn_ns_ols(t, y, tau), tau0)
+    curve, lstsq_res = betas_ns_ols(t, y, opt_res.x[0])
+    return curve, opt_res
