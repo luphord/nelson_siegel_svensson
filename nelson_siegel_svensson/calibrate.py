@@ -17,7 +17,7 @@ def betas_ns_ols(t, y, tau):
     _assert_same_shape(t, y)
     curve = NelsonSiegelCurve(0, 0, 0, tau)
     factors = curve.factor_matrix(t)
-    res = lstsq(factors, y)
+    res = lstsq(factors, y, rcond=None)
     beta = res[0]
     return NelsonSiegelCurve(beta[0], beta[1], beta[2], tau)
 
