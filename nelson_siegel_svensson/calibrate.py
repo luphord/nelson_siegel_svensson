@@ -9,7 +9,7 @@ def _assert_same_shape(t, y):
     assert t.shape == y.shape, 'Mismatching shapes of time and values'
 
 
-def betas_ns_ols(t, y, tau):
+def betas_ns_ols(tau, t, y):
     '''Calculate the best-fitting beta-values given tau
        for time-value pairs t and y and return a corresponding
        Nelson-Siegel curve instance.
@@ -28,7 +28,7 @@ def errorfn_ns_ols(tau, t, y):
        least squares given tau.
     '''
     _assert_same_shape(t, y)
-    curve, lstsq_res = betas_ns_ols(t, y, tau)
+    curve, lstsq_res = betas_ns_ols(tau, t, y)
     return np.sum((curve(t) - y)**2)
 
 
@@ -39,5 +39,5 @@ def calibrate_ns_ols(t, y, tau0=2.0):
     '''
     _assert_same_shape(t, y)
     opt_res = minimize(errorfn_ns_ols, x0=tau0, args=(t, y))
-    curve, lstsq_res = betas_ns_ols(t, y, opt_res.x[0])
+    curve, lstsq_res = betas_ns_ols(opt_res.x[0], t, y)
     return curve, opt_res
