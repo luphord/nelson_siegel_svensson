@@ -38,4 +38,4 @@ def calibrate_ns_ols(t, y, tau0=2.0):
     '''
     _assert_same_shape(t, y)
     res = minimize(lambda tau: errorfn_ns_ols(t, y, tau), tau0)
-    return betas_ns_ols(t, y, res.x)
+    return betas_ns_ols(t, y, res.x[0])
