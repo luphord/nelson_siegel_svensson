@@ -22,7 +22,7 @@ def betas_ns_ols(t, y, tau):
     return NelsonSiegelCurve(beta[0], beta[1], beta[2], tau), res
 
 
-def errorfn_ns_ols(t, y, tau):
+def errorfn_ns_ols(tau, t, y):
     '''Sum of squares error function for a Nelson-Siegel model and
        time-value pairs t and y. All betas are obtained by ordinary
        least squares given tau.
@@ -38,6 +38,6 @@ def calibrate_ns_ols(t, y, tau0=2.0):
        using ordinary least squares.
     '''
     _assert_same_shape(t, y)
-    opt_res = minimize(lambda tau: errorfn_ns_ols(t, y, tau), tau0)
+    opt_res = minimize(errorfn_ns_ols, x0=tau0, args=(t, y))
     curve, lstsq_res = betas_ns_ols(t, y, opt_res.x[0])
     return curve, opt_res
