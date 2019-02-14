@@ -4,6 +4,14 @@ nelson\_siegel\_svensson package
 Submodules
 ----------
 
+nelson\_siegel\_svensson.calibrate module
+-----------------------------------------
+
+.. automodule:: nelson_siegel_svensson.calibrate
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 nelson\_siegel\_svensson.cli module
 -----------------------------------
 
