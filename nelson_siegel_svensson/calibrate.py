@@ -41,3 +41,9 @@ def calibrate_ns_ols(t, y, tau0=2.0):
     opt_res = minimize(errorfn_ns_ols, x0=tau0, args=(t, y))
     curve, lstsq_res = betas_ns_ols(opt_res.x[0], t, y)
     return curve, opt_res
+
+
+def empirical_factors(y_3m, y_2y, y_10y):
+    '''Calculate the empirical factors according to
+        Diebold and Li (2006)'''
+    return y_10y, y_10y - y_3m, 2*y_2y - y_3m - y_10y
