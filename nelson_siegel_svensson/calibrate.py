@@ -3,6 +3,7 @@ from numpy.linalg import lstsq
 from scipy.optimize import minimize
 
 from .ns import NelsonSiegelCurve
+from .nss import NelsonSiegelSvenssonCurve
 
 
 def _assert_same_shape(t, y):
@@ -47,3 +48,17 @@ def empirical_factors(y_3m, y_2y, y_10y):
     '''Calculate the empirical factors according to
         Diebold and Li (2006)'''
     return y_10y, y_10y - y_3m, 2*y_2y - y_3m - y_10y
+
+
+def betas_nss_ols(tau, t, y):
+    '''Calculate the best-fitting beta-values given tau (= array of tau1
+       and tau2) for time-value pairs t and y and return a corresponding
+       Nelson-Siegel-Svensson curve instance.
+    '''
+    _assert_same_shape(t, y)
+    curve = NelsonSiegelSvenssonCurve(0, 0, 0, 0, tau[0], tau[1])
+    factors = curve.factor_matrix(t)
+    lstsq_res = lstsq(factors, y, rcond=None)
+    beta = lstsq_res[0]
+    return NelsonSiegelSvenssonCurve(beta[0], beta[1], beta[2], beta[3],
+                                     tau[0], tau[1]), lstsq_res
