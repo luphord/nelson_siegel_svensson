@@ -62,3 +62,14 @@ def betas_nss_ols(tau, t, y):
     beta = lstsq_res[0]
     return NelsonSiegelSvenssonCurve(beta[0], beta[1], beta[2], beta[3],
                                      tau[0], tau[1]), lstsq_res
+
+
+def errorfn_nss_ols(tau, t, y):
+    '''Sum of squares error function for a Nelson-Siegel-Svensson
+       model and time-value pairs t and y. All betas are obtained
+       by ordinary least squares given tau (= array of tau1
+       and tau2).
+    '''
+    _assert_same_shape(t, y)
+    curve, lstsq_res = betas_nss_ols(tau, t, y)
+    return np.sum((curve(t) - y)**2)
