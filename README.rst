@@ -28,7 +28,7 @@ Implementation of the Nelson-Siegel-Svensson interest rate curve model.
         t = np.linspace(0, 20, 100)
         plot(t, y(t))
 
-.. image:: _static/an_example_nelson-siegel-svensson-curve.png
+.. image:: docs/_static/an_example_nelson-siegel-svensson-curve.png
 
 * Free software: MIT license
 * Documentation: https://nelson-siegel-svensson.readthedocs.io.
