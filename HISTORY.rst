@@ -2,11 +2,12 @@
 History
 =======
 
-0.2.0 (not yet)
----------------
+0.2.0 (2019-02-20)
+------------------
 
+* Ordinary least squares based calibration of Nelson-Siegel-Svensson
 * Ordinary least squares based calibration of Nelson-Siegel
-* Usage documentation
+* A little bit of usage documentation
 
 0.1.0 (2019-02-13)
 ------------------

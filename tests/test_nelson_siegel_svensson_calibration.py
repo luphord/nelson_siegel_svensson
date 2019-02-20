@@ -3,7 +3,8 @@ import unittest
 import numpy as np
 
 from nelson_siegel_svensson import NelsonSiegelSvenssonCurve
-from nelson_siegel_svensson.calibrate import betas_nss_ols, errorfn_nss_ols
+from nelson_siegel_svensson.calibrate import betas_nss_ols, errorfn_nss_ols, \
+                                        calibrate_nss_ols
 
 
 class TestNelsonSiegelSvenssonCurveCalibration(unittest.TestCase):
@@ -34,3 +35,30 @@ class TestNelsonSiegelSvenssonCurveCalibration(unittest.TestCase):
         self.assertAlmostEqual(0.0, error, places=12)
         error2 = errorfn_nss_ols(tau * 1.1, t, y_target)
         self.assertNotAlmostEqual(0.0, error2)
+
+    def test_nelson_siegel_svensson_ols_calibration(self):
+        '''Test ols based calibration of Nelson-Siegel-Svensson model'''
+        t = np.linspace(0, 30)
+        y_target = self.y(t)
+        tau0 = np.array([self.y.tau1, self.y.tau2])
+        y_hat, opt_res = calibrate_nss_ols(t, y_target, tau0=tau0)
+        places = 12
+        self.assertAlmostEqual(self.y.beta0, y_hat.beta0, places=places)
+        self.assertAlmostEqual(self.y.beta1, y_hat.beta1, places=places)
+        self.assertAlmostEqual(self.y.beta2, y_hat.beta2, places=places)
+        self.assertAlmostEqual(self.y.beta3, y_hat.beta3, places=places)
+        self.assertAlmostEqual(self.y.tau1, y_hat.tau1, places=places)
+        self.assertAlmostEqual(self.y.tau2, y_hat.tau2, places=places)
+        # Not using the true values for tau1/2 as starting values
+        # turns optimization results bad fairly quick
+        # just 1% deviation and we only get two places accuracy
+        tau0 = np.array([self.y.tau1*0.99, self.y.tau2*1.01])
+        places_beta = 2
+        places_tau = 1
+        y_hat, opt_res = calibrate_nss_ols(t, y_target, tau0=tau0)
+        self.assertAlmostEqual(self.y.beta0, y_hat.beta0, places=places_beta)
+        self.assertAlmostEqual(self.y.beta1, y_hat.beta1, places=places_beta)
+        self.assertAlmostEqual(self.y.beta2, y_hat.beta2, places=places_beta)
+        self.assertAlmostEqual(self.y.beta3, y_hat.beta3, places=places_beta)
+        self.assertAlmostEqual(self.y.tau1, y_hat.tau1, places=places_tau)
+        self.assertAlmostEqual(self.y.tau2, y_hat.tau2, places=places_tau)

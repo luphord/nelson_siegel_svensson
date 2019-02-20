@@ -73,3 +73,16 @@ def errorfn_nss_ols(tau, t, y):
     _assert_same_shape(t, y)
     curve, lstsq_res = betas_nss_ols(tau, t, y)
     return np.sum((curve(t) - y)**2)
+
+
+def calibrate_nss_ols(t, y, tau0=(2.0, 5.0)):
+    '''Calibrate a Nelson-Siegel-Svensson curve to time-value
+       pairs t and y, by optimizing tau1 and tau2 and chosing
+       all betas using ordinary least squares. This method does
+       not work well regarding the recovery of true parameters.
+    '''
+    _assert_same_shape(t, y)
+    tau0 = np.array(tau0)
+    opt_res = minimize(errorfn_nss_ols, x0=tau0, args=(t, y))
+    curve, lstsq_res = betas_nss_ols(opt_res.x, t, y)
+    return curve, opt_res
