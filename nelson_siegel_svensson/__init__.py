@@ -4,7 +4,7 @@
 
 __author__ = """luphord"""
 __email__ = 'luphord@protonmail.com'
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 from .ns import NelsonSiegelCurve
 from .nss import NelsonSiegelSvenssonCurve
