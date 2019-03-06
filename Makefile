@@ -50,6 +50,9 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
+type: ## run mypy type checks
+	mypy --config-file mypy.ini nelson_siegel_svensson tests
+
 lint: ## check style with flake8
 	flake8 nelson_siegel_svensson tests
 
