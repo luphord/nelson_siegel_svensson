@@ -1,5 +1,6 @@
-from numbers import Number
+from numbers import Real
 from dataclasses import dataclass
+from typing import Union
 
 import numpy as np
 from numpy import exp
@@ -19,10 +20,10 @@ class NelsonSiegelCurve:
     beta2: float
     tau: float
 
-    def factors(self, T):
+    def factors(self, T: Union[Real, np.ndarray]):
         '''Factor loadings for time(s) T, excluding constant'''
         tau = self.tau
-        if isinstance(T, Number) and T <= 0:
+        if isinstance(T, Real) and T <= 0:
             return 1, 0
         elif isinstance(T, np.ndarray):
             zero_idx = T <= 0

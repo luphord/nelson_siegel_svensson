@@ -1,5 +1,6 @@
-from numbers import Number
+from numbers import Real
 from dataclasses import dataclass
+from typing import Union
 
 import numpy as np
 from numpy import exp
@@ -21,11 +22,11 @@ class NelsonSiegelSvenssonCurve:
     tau1: float
     tau2: float
 
-    def factors(self, T):
+    def factors(self, T: Union[Real, np.ndarray]):
         '''Factor loadings for time(s) T, excluding constant'''
         tau1 = self.tau1
         tau2 = self.tau2
-        if isinstance(T, Number) and T <= 0:
+        if isinstance(T, Real) and T <= 0:
             return 1, 0, 0
         elif isinstance(T, np.ndarray):
             zero_idx = T <= 0
