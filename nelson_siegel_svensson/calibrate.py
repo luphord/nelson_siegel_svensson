@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import numpy as np
 from numpy.linalg import lstsq
 from scipy.optimize import minimize
@@ -6,11 +8,11 @@ from .ns import NelsonSiegelCurve
 from .nss import NelsonSiegelSvenssonCurve
 
 
-def _assert_same_shape(t, y):
+def _assert_same_shape(t: np.ndarray, y: np.ndarray):
     assert t.shape == y.shape, 'Mismatching shapes of time and values'
 
 
-def betas_ns_ols(tau, t, y):
+def betas_ns_ols(tau: float, t: np.ndarray, y: np.ndarray):
     '''Calculate the best-fitting beta-values given tau
        for time-value pairs t and y and return a corresponding
        Nelson-Siegel curve instance.
@@ -23,7 +25,7 @@ def betas_ns_ols(tau, t, y):
     return NelsonSiegelCurve(beta[0], beta[1], beta[2], tau), lstsq_res
 
 
-def errorfn_ns_ols(tau, t, y):
+def errorfn_ns_ols(tau: float, t: np.ndarray, y: np.ndarray):
     '''Sum of squares error function for a Nelson-Siegel model and
        time-value pairs t and y. All betas are obtained by ordinary
        least squares given tau.
@@ -33,7 +35,7 @@ def errorfn_ns_ols(tau, t, y):
     return np.sum((curve(t) - y)**2)
 
 
-def calibrate_ns_ols(t, y, tau0=2.0):
+def calibrate_ns_ols(t: np.ndarray, y: np.ndarray, tau0: float=2.0):
     '''Calibrate a Nelson-Siegel curve to time-value pairs
        t and y, by optimizing tau and chosing all betas
        using ordinary least squares.
@@ -44,13 +46,13 @@ def calibrate_ns_ols(t, y, tau0=2.0):
     return curve, opt_res
 
 
-def empirical_factors(y_3m, y_2y, y_10y):
+def empirical_factors(y_3m: float, y_2y: float, y_10y: float):
     '''Calculate the empirical factors according to
         Diebold and Li (2006)'''
     return y_10y, y_10y - y_3m, 2*y_2y - y_3m - y_10y
 
 
-def betas_nss_ols(tau, t, y):
+def betas_nss_ols(tau: Tuple[float, float], t: np.ndarray, y: np.ndarray):
     '''Calculate the best-fitting beta-values given tau (= array of tau1
        and tau2) for time-value pairs t and y and return a corresponding
        Nelson-Siegel-Svensson curve instance.
@@ -64,7 +66,7 @@ def betas_nss_ols(tau, t, y):
                                      tau[0], tau[1]), lstsq_res
 
 
-def errorfn_nss_ols(tau, t, y):
+def errorfn_nss_ols(tau: Tuple[float, float], t: np.ndarray, y: np.ndarray):
     '''Sum of squares error function for a Nelson-Siegel-Svensson
        model and time-value pairs t and y. All betas are obtained
        by ordinary least squares given tau (= array of tau1
@@ -75,7 +77,8 @@ def errorfn_nss_ols(tau, t, y):
     return np.sum((curve(t) - y)**2)
 
 
-def calibrate_nss_ols(t, y, tau0=(2.0, 5.0)):
+def calibrate_nss_ols(t: np.ndarray, y: np.ndarray,
+                      tau0: Tuple[float, float]=(2.0, 5.0)):
     '''Calibrate a Nelson-Siegel-Svensson curve to time-value
        pairs t and y, by optimizing tau1 and tau2 and chosing
        all betas using ordinary least squares. This method does
