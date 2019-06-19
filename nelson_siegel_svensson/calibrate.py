@@ -55,7 +55,7 @@ def calibrate_ns_ols(t: np.ndarray, y: np.ndarray, tau0: float=2.0):
 
 def empirical_factors(y_3m: float, y_2y: float, y_10y: float):
     '''Calculate the empirical factors according to
-        Diebold and Li (2006)'''
+       Diebold and Li (2006).'''
     return y_10y, y_10y - y_3m, 2*y_2y - y_3m - y_10y
 
 
