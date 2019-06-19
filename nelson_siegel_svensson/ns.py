@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+'''Implementation of a Nelson-Siegel interest rate curve model.
+See `NelsonSiegelCurve` class for details.
+'''
+
 from numbers import Real
 from dataclasses import dataclass
 from typing import Union
