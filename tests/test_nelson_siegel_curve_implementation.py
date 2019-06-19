@@ -8,7 +8,7 @@ from nelson_siegel_svensson import NelsonSiegelCurve
 
 
 class TestNelsonSiegelCurveImplementation(unittest.TestCase):
-    '''Tests for Nelson-Siegel curve implementation'''
+    '''Tests for Nelson-Siegel curve implementation.'''
 
     def setUp(self):
         self.y = NelsonSiegelCurve(0.017, -0.023, 0.24, 2.2)

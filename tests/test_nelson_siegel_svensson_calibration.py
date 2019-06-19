@@ -10,14 +10,14 @@ from nelson_siegel_svensson.calibrate import betas_nss_ols, errorfn_nss_ols, \
 
 
 class TestNelsonSiegelSvenssonCurveCalibration(unittest.TestCase):
-    '''Tests for Nelson-Siegel-Svensson curve calibration'''
+    '''Tests for Nelson-Siegel-Svensson curve calibration.'''
 
     def setUp(self):
         self.y = NelsonSiegelSvenssonCurve(0.017, -0.023, 0.24, 0.1, 2.2, 3.1)
 
     def test_nelson_siegel_svensson_betas_recovery(self):
         '''Test recovery of betas using ordinary least squares
-           (given fixed tau1 and tau2)
+           (given fixed tau1 and tau2).
         '''
         t = np.linspace(0, 30)
         y_target = self.y(t)
@@ -29,7 +29,7 @@ class TestNelsonSiegelSvenssonCurveCalibration(unittest.TestCase):
         self.assertAlmostEqual(self.y.beta3, curve.beta3, places=12)
 
     def test_nelson_siegel_svensson_ols_errorfn_for_correct_tau(self):
-        '''Test ols based error function for correct tau'''
+        '''Test ols based error function for correct tau.'''
         t = np.linspace(0, 30)
         y_target = self.y(t)
         tau = np.array([self.y.tau1, self.y.tau2])
@@ -39,7 +39,7 @@ class TestNelsonSiegelSvenssonCurveCalibration(unittest.TestCase):
         self.assertNotAlmostEqual(0.0, error2)
 
     def test_nelson_siegel_svensson_ols_calibration(self):
-        '''Test ols based calibration of Nelson-Siegel-Svensson model'''
+        '''Test ols based calibration of Nelson-Siegel-Svensson model.'''
         t = np.linspace(0, 30)
         y_target = self.y(t)
         tau0 = np.array([self.y.tau1, self.y.tau2])

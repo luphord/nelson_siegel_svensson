@@ -8,7 +8,7 @@ from nelson_siegel_svensson import NelsonSiegelSvenssonCurve
 
 
 class TestNelsonSiegelSvenssonCurveImplementation(unittest.TestCase):
-    '''Tests for Nelson-Siegel-Svensson curve implementation'''
+    '''Tests for Nelson-Siegel-Svensson curve implementation.'''
 
     def setUp(self):
         self.y = NelsonSiegelSvenssonCurve(0.017, -0.023, 0.24, 0.1, 2.2, 3.1)
@@ -17,7 +17,7 @@ class TestNelsonSiegelSvenssonCurveImplementation(unittest.TestCase):
         NelsonSiegelSvenssonCurve(0, 0, 0, 0, 0, 0)
 
     def test_nelson_siegel_svensson_curve_array_vs_individual(self):
-        '''Test curve evaluation on array vs individual elements'''
+        '''Test curve evaluation on array vs individual elements.'''
         y = self.y
         t = np.linspace(0, 10, 11)
         y_array = y(t)
@@ -26,7 +26,7 @@ class TestNelsonSiegelSvenssonCurveImplementation(unittest.TestCase):
                         'array valued yields differ from individual ones')
 
     def test_nelson_siegel_svensson_at_0(self):
-        '''Test curve evaluation at time 0'''
+        '''Test curve evaluation at time 0.'''
         y = self.y
         y_actual = y(0.0)  # float time
         self.assertEqual(y.beta0 + y.beta1, y_actual)
@@ -43,7 +43,7 @@ class TestNelsonSiegelSvenssonCurveImplementation(unittest.TestCase):
                         'calculated yields differ from expected ones')
 
     def test_ecb_2016_01_04_parameters(self):
-        '''Test curve evaluation for ECB AAA curve parameters on 2016-01-04'''
+        '''Test curve evaluation for ECB AAA curve parameters on 2016-01-04.'''
         y = NelsonSiegelSvenssonCurve(2.142562216, -2.649562216,
                                       19.9532384206, -24.0677865973,
                                       1.6568604918, 1.8145254889)
@@ -60,7 +60,7 @@ class TestNelsonSiegelSvenssonCurveImplementation(unittest.TestCase):
                         'calculated yields differ from expected ones')
 
     def test_gilli_grosse_schumann_parameters(self):
-        '''Test parameters from Gilli, Grosse, Schumann paper (Table 1)'''
+        '''Test parameters from Gilli, Grosse, Schumann paper (Table 1).'''
         y = NelsonSiegelSvenssonCurve(2.05, -1.82, -2.03, 8.25, 0.87, 14.38)
         t = np.array([1/4, 1/2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30])
         y_expected = np.array([0.3, 0.4, 0.68, 1.27, 1.78, 2.2, 2.53, 2.8,
@@ -70,7 +70,7 @@ class TestNelsonSiegelSvenssonCurveImplementation(unittest.TestCase):
                         'calculated yields differ from expected ones')
 
     def test_forward_against_zero_curve(self):
-        '''Test forward against zero curve implementation by integrating'''
+        '''Test forward against zero curve implementation by integrating.'''
         t = np.linspace(0.001, 25, 500)
         dt = t[1] - t[0]
         y_by_fw_integration = np.cumsum(self.y.forward(t)) * dt / t
@@ -80,7 +80,7 @@ class TestNelsonSiegelSvenssonCurveImplementation(unittest.TestCase):
         # todo: numerical issue closer to 0?
 
     def test_factor_matrix(self):
-        '''Test shape of factor matrix'''
+        '''Test shape of factor matrix.'''
         n = 50
         t = np.linspace(0, 25, n)
         fmat = self.y.factor_matrix(t)
