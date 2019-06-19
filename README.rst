@@ -16,7 +16,7 @@ Nelson-Siegel-Svensson Model
 
 
 
-Implementation of the Nelson-Siegel-Svensson interest rate curve model.
+Implementation of the Nelson-Siegel-Svensson interest rate curve model in Python.
 
 .. code-block:: python
 
@@ -37,12 +37,20 @@ Implementation of the Nelson-Siegel-Svensson interest rate curve model.
 Features
 --------
 
-* TODO
+* Python implementation of the Nelson-Siegel curve (three factors)
+* Python implementation of the Nelson-Siegel-Svensson curve (four factors)
+* Methods for zero and forward rates (as vectorized functions of time points)
+* Methods for the factors (as vectorized function of time points)
+* Calibration based on ordinary least squares (OLS) for betas and nonlinear optimization for taus
 
 Credits
 -------
 
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+Main developer is luphord_.
+
+.. _luphord: https://github.com/luphord
+
+This package was prepared with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage

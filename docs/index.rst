@@ -1,5 +1,5 @@
-Welcome to Nelson-Siegel-Svensson Model's documentation!
-======================================
+Documentation for the Nelson-Siegel-Svensson Model Python Implementation
+========================================================================
 
 .. toctree::
    :maxdepth: 2
