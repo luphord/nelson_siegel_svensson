@@ -1,8 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-"""Tests for `nelson_siegel_svensson` package."""
-
 
 import unittest
 from click.testing import CliRunner

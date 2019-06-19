@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from numbers import Real
 from dataclasses import dataclass
 from typing import Union
