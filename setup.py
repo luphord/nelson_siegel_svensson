@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""The setup script."""
+'''The setup script.'''
 
 from setuptools import setup, find_packages
 
@@ -13,12 +13,12 @@ with open('HISTORY.rst') as history_file:
 
 requirements = ['Click>=6.0', 'numpy>=1.14', 'scipy>=1.2']
 
-setup_requirements = [ ]
+setup_requirements = []
 
-test_requirements = [ ]
+test_requirements = []
 
 setup(
-    author="luphord",
+    author='luphord',
     author_email='luphord@protonmail.com',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
@@ -27,14 +27,15 @@ setup(
         'Natural Language :: English',
         'Programming Language :: Python :: 3.7',
     ],
-    description="Implementation of the Nelson-Siegel-Svensson interest rate curve model.",
+    description='Implementation of the Nelson-Siegel-Svensson ' +
+                'interest rate curve model.',
     entry_points={
         'console_scripts': [
-            'nelson_siegel_svensson=nelson_siegel_svensson.cli:main',
+            'nelson_siegel_svensson=nelson_siegel_svensson.cli:cli_main',
         ],
     },
     install_requires=requirements,
-    license="MIT license",
+    license='MIT license',
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='nelson_siegel_svensson',
