@@ -5,6 +5,8 @@ import sys
 import click
 import json
 
+import numpy as np
+
 from .ns import NelsonSiegelCurve
 from .nss import NelsonSiegelSvenssonCurve
 
@@ -12,7 +14,7 @@ from .nss import NelsonSiegelSvenssonCurve
 class Curve(click.ParamType):
     '''Parameter type representing a curve (either Nelson-Siegel
        or Nelson-Siegel-Svensson)'''
-    name = 'ratio'
+    name = 'curve'
 
     def convert(self, value, param, ctx):
         try:
@@ -21,8 +23,22 @@ class Curve(click.ParamType):
                 return NelsonSiegelSvenssonCurve(**decoded)
             else:
                 return NelsonSiegelCurve(**decoded)
-        except Exception:
-            self.fail('{} is not a valid curve'.format(value), param, ctx)
+        except Exception as e:
+            self.fail('{} is not a valid curve: {}'.format(value, e),
+                      param, ctx)
+
+
+class FloatArray(click.ParamType):
+    '''Parameter type representing an array of floats'''
+    name = 'floats'
+
+    def convert(self, value, param, ctx):
+        try:
+            decoded = json.loads(value)
+            return np.array([float(f) for f in decoded])
+        except Exception as e:
+            self.fail('{} is not a valid array of floats: {}'.format(value, e),
+                      param, ctx)
 
 
 @click.group(name='nelson_siegel_svensson')
@@ -32,19 +48,27 @@ def cli_main(args=None):
 
 
 @click.command(name='calibrate')
-def cli_calibrate(file):
+def cli_calibrate():
     '''Evaluate a curve at given points'''
     raise NotImplementedError()
 
 
 @click.command(name='evaluate')
-def cli_evaluate(file):
+@click.option('-c', '--curve',
+              type=Curve(),
+              required=True,
+              help='Parameters for curve as JSON object.')
+@click.option('-t', '--times',
+              type=FloatArray(),
+              required=True,
+              help='Evaluation times as JSON array.')
+def cli_evaluate(curve, times):
     '''Evaluate a curve at given points'''
-    raise NotImplementedError()
+    click.echo(json.dumps(curve(times).tolist()))
 
 
 @click.command(name='plot')
-def cli_plot(file):
+def cli_plot():
     '''Plot a curve at given points'''
     raise NotImplementedError()
 
