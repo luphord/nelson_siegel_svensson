@@ -18,15 +18,24 @@ class TestNelson_siegel_svensson(unittest.TestCase):
     def setUp(self):
         self.y1 = NelsonSiegelCurve(0.017, -0.023, 0.24, 2.2)
         self.y2 = NelsonSiegelSvenssonCurve(0.017, -0.023, 0.24, 0.1, 2.2, 3.1)
+        self.runner = CliRunner()
 
     def test_command_line_interface(self):
         '''Test the CLI.'''
-        runner = CliRunner()
-        result = runner.invoke(cli.cli_main)
+        result = self.runner.invoke(cli.cli_main)
         assert result.exit_code == 0
-        help_result = runner.invoke(cli.cli_main, ['--help'])
+        help_result = self.runner.invoke(cli.cli_main, ['--help'])
         assert help_result.exit_code == 0
         assert '--help  Show this message and exit.' in help_result.output
+
+    def test_cli_evaluate(self):
+        '''Test evaluate CLI.'''
+        param = ['evaluate', '-c',
+                 '{"beta0": 0.017, "beta1": -0.023, "beta2": 0.24, "tau": 2}',
+                 '-t', '[1,2,3]']
+        help_result = self.runner.invoke(cli.cli_main, param)
+        assert help_result.exit_code == 0
+        assert '0.0758359' in help_result.output
 
     def test_curve_parameters(self):
         '''Test curve parameter.'''
