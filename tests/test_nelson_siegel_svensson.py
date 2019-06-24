@@ -3,6 +3,8 @@
 import unittest
 import json
 from dataclasses import asdict
+
+import numpy as np
 import click
 from click.testing import CliRunner
 
@@ -42,3 +44,21 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         self.assertEqual(self.y2,
                          param.convert(json.dumps(asdict(self.y2)),
                                        None, None))
+
+    def test_float_array_parameters(self):
+        '''Test float array parameter.'''
+        param = cli.FloatArray()
+        self.assertRaises(click.BadParameter, param.convert,
+                          value='', param=None, ctx=None)
+        self.assertRaises(click.BadParameter, param.convert,
+                          value='{"a": 1}', param=None, ctx=None)
+        self.assertRaises(click.BadParameter, param.convert,
+                          value='["a"]', param=None, ctx=None)
+        self.assertEqual(np.array([1.0]),
+                         param.convert('[1.0]', None, None))
+        self.assertEqual(np.array([1.0]),
+                         param.convert('[1]', None, None))
+        self.assertEqual([],
+                         param.convert('[]', None, None).tolist())
+        self.assertTrue((np.array([1.0, 2.0, 3.0]) ==
+                         param.convert('[1,   2,3.0]', None, None)).all())
