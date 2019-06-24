@@ -3,6 +3,26 @@
 '''Console script for nelson_siegel_svensson.'''
 import sys
 import click
+import json
+
+from .ns import NelsonSiegelCurve
+from .nss import NelsonSiegelSvenssonCurve
+
+
+class Curve(click.ParamType):
+    '''Parameter type representing a curve (either Nelson-Siegel
+       or Nelson-Siegel-Svensson)'''
+    name = 'ratio'
+
+    def convert(self, value, param, ctx):
+        try:
+            decoded = json.loads(value)
+            if 'beta3' in decoded:
+                return NelsonSiegelSvenssonCurve(**decoded)
+            else:
+                return NelsonSiegelCurve(**decoded)
+        except Exception:
+            self.fail('{} is not a valid curve'.format(value), param, ctx)
 
 
 @click.group(name='nelson_siegel_svensson')
