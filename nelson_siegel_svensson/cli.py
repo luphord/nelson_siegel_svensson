@@ -87,9 +87,28 @@ def cli_evaluate(curve, times):
 
 
 @click.command(name='plot')
-def cli_plot():
+@click.option('-c', '--curve',
+              type=Curve(),
+              required=True,
+              help='Parameters for curve as JSON object.')
+@click.option('-o', '--output',
+              type=click.Path(file_okay=True, dir_okay=False,
+                              writable=True, resolve_path=True),
+              required=True,
+              help='Output file for the plot.')
+@click.option('-f', '--from-time',
+              type=click.FLOAT,
+              default=0.0,
+              show_default=True,
+              help='Left time point of the plot.')
+@click.option('-t', '--to-time',
+              type=click.FLOAT,
+              default=30.0,
+              show_default=True,
+              help='Right time point of the plot.')
+def cli_plot(curve, output, from_time, to_time):
     '''Plot a curve at given points'''
-    raise NotImplementedError()
+    pass
 
 
 cli_main.add_command(cli_calibrate)

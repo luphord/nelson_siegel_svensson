@@ -59,6 +59,15 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         self.assertEqual(0, result.exit_code)
         self.assertIn('0.0425', result.output)
 
+    def test_cli_plot(self):
+        '''Test plot CLI.'''
+        fname = 'output.png'
+        param = ['plot', '-o', fname, '-c',
+                 '{"beta0": 0.017, "beta1": -0.023, "beta2": 0.24, "tau": 2}']
+        with self.runner.isolated_filesystem():
+            result = self.runner.invoke(cli.cli_main, param)
+            self.assertEqual(0, result.exit_code)
+
     def test_curve_parameters(self):
         '''Test curve parameter.'''
         param = cli.Curve()
