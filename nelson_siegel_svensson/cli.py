@@ -48,9 +48,22 @@ def cli_main(args=None):
 
 
 @click.command(name='calibrate')
-def cli_calibrate():
-    '''Evaluate a curve at given points'''
-    raise NotImplementedError()
+@click.option('-t', '--times',
+              type=FloatArray(),
+              required=True,
+              help='time points as JSON array.')
+@click.option('-y', '--values',
+              type=FloatArray(),
+              required=True,
+              help='values corresponding to time points as JSON array.')
+@click.option('--nelson-siegel-svensson/--nelson-siegel',
+              default=True,
+              help='whether to calibrate a Nelson-Siegel-Svensson (4 factor)' +
+                   ' or a Nelson-Siegel (3 factor) curve. Defaults to' +
+                   ' the former.')
+def cli_calibrate(times, values, nelson_siegel_svensson):
+    '''Calibrate a curve to the given data points.'''
+    pass
 
 
 @click.command(name='evaluate')
@@ -63,7 +76,7 @@ def cli_calibrate():
               required=True,
               help='Evaluation times as JSON array.')
 def cli_evaluate(curve, times):
-    '''Evaluate a curve at given points'''
+    '''Evaluate a curve at given points.'''
     click.echo(json.dumps(curve(times).tolist()))
 
 

@@ -18,6 +18,10 @@ class TestNelson_siegel_svensson(unittest.TestCase):
     def setUp(self):
         self.y1 = NelsonSiegelCurve(0.017, -0.023, 0.24, 2.2)
         self.y2 = NelsonSiegelSvenssonCurve(0.017, -0.023, 0.24, 0.1, 2.2, 3.1)
+        self.t = [0.0, 0.5, 1.0, 2.0, 3.0, 4.0, 5.0,
+                  10.0, 15.0, 20.0, 25.0, 30.0]
+        self.y = [0.01, 0.011, 0.013, 0.016, 0.019, 0.021,
+                  0.026, 0.03, 0.035, 0.037, 0.038, 0.04]
         self.runner = CliRunner()
 
     def test_command_line_interface(self):
@@ -33,9 +37,16 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         param = ['evaluate', '-c',
                  '{"beta0": 0.017, "beta1": -0.023, "beta2": 0.24, "tau": 2}',
                  '-t', '[1,2,3]']
+        result = self.runner.invoke(cli.cli_main, param)
+        assert result.exit_code == 0
+        assert '0.0758359' in result.output
+
+    def test_cli_calibrate(self):
+        '''Test calibrate CLI.'''
+        param = ['calibrate', '-t', json.dumps(self.t),
+                 '-y', json.dumps(self.y)]
         help_result = self.runner.invoke(cli.cli_main, param)
         assert help_result.exit_code == 0
-        assert '0.0758359' in help_result.output
 
     def test_curve_parameters(self):
         '''Test curve parameter.'''
