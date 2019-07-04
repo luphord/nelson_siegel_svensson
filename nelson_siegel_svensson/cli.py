@@ -9,6 +9,7 @@ import numpy as np
 
 from .ns import NelsonSiegelCurve
 from .nss import NelsonSiegelSvenssonCurve
+from .calibrate import calibrate_ns_ols, calibrate_nss_ols
 
 
 class Curve(click.ParamType):
@@ -63,7 +64,12 @@ def cli_main(args=None):
                    ' the former.')
 def cli_calibrate(times, values, nelson_siegel_svensson):
     '''Calibrate a curve to the given data points.'''
-    pass
+    if nelson_siegel_svensson:
+        curve, status = calibrate_nss_ols(times, values)
+    else:
+        curve, status = calibrate_ns_ols(times, values)
+    assert status.success
+    click.echo(json.dumps(vars(curve)))
 
 
 @click.command(name='evaluate')
