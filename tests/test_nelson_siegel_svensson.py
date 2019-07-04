@@ -54,6 +54,10 @@ class TestNelson_siegel_svensson(unittest.TestCase):
                                     param + ['--nelson-siegel-svensson'])
         self.assertEqual(0, result.exit_code)
         self.assertEqual(first_output, result.output)
+        result = self.runner.invoke(cli.cli_main,
+                                    param + ['--nelson-siegel'])
+        self.assertEqual(0, result.exit_code)
+        self.assertIn('0.0425', result.output)
 
     def test_curve_parameters(self):
         '''Test curve parameter.'''
