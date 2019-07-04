@@ -6,6 +6,7 @@ import click
 import json
 
 import numpy as np
+from matplotlib import pyplot as plt
 
 from .ns import NelsonSiegelCurve
 from .nss import NelsonSiegelSvenssonCurve
@@ -108,7 +109,12 @@ def cli_evaluate(curve, times):
               help='Right time point of the plot.')
 def cli_plot(curve, output, from_time, to_time):
     '''Plot a curve at given points'''
-    pass
+    fig, ax = plt.subplots(nrows=1, ncols=1)
+    t = np.linspace(from_time, to_time, num=100)
+    y = curve(t)
+    ax.plot(t, y)
+    fig.savefig(output)
+    plt.close(fig)
 
 
 cli_main.add_command(cli_calibrate)

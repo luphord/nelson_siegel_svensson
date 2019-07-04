@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+import os
 import json
 from dataclasses import asdict
 
@@ -67,6 +68,7 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         with self.runner.isolated_filesystem():
             result = self.runner.invoke(cli.cli_main, param)
             self.assertEqual(0, result.exit_code)
+            self.assertTrue(os.path.exists(fname), fname + ' missing')
 
     def test_curve_parameters(self):
         '''Test curve parameter.'''
