@@ -27,10 +27,11 @@ class TestNelson_siegel_svensson(unittest.TestCase):
     def test_command_line_interface(self):
         '''Test the CLI.'''
         result = self.runner.invoke(cli.cli_main)
-        assert result.exit_code == 0
+        self.assertEqual(0, result.exit_code)
         help_result = self.runner.invoke(cli.cli_main, ['--help'])
-        assert help_result.exit_code == 0
-        assert '--help  Show this message and exit.' in help_result.output
+        self.assertEqual(0, help_result.exit_code)
+        self.assertIn('--help  Show this message and exit.',
+                      help_result.output)
 
     def test_cli_evaluate(self):
         '''Test evaluate CLI.'''
@@ -38,21 +39,21 @@ class TestNelson_siegel_svensson(unittest.TestCase):
                  '{"beta0": 0.017, "beta1": -0.023, "beta2": 0.24, "tau": 2}',
                  '-t', '[1,2,3]']
         result = self.runner.invoke(cli.cli_main, param)
-        assert result.exit_code == 0
-        assert '0.0758359' in result.output
+        self.assertEqual(0, result.exit_code)
+        self.assertIn('0.0758359', result.output)
 
     def test_cli_calibrate(self):
         '''Test calibrate CLI.'''
         param = ['calibrate', '-t', json.dumps(self.t),
                  '-y', json.dumps(self.y)]
         result = self.runner.invoke(cli.cli_main, param)
-        assert result.exit_code == 0
-        assert '0.0451' in result.output
+        self.assertEqual(0, result.exit_code)
+        self.assertIn('0.0451', result.output)
         first_output = result.output
         result = self.runner.invoke(cli.cli_main,
                                     param + ['--nelson-siegel-svensson'])
-        assert result.exit_code == 0
-        assert first_output == result.output
+        self.assertEqual(0, result.exit_code)
+        self.assertEqual(first_output, result.output)
 
     def test_curve_parameters(self):
         '''Test curve parameter.'''
