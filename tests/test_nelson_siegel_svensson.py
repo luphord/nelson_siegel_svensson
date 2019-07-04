@@ -69,6 +69,10 @@ class TestNelson_siegel_svensson(unittest.TestCase):
             result = self.runner.invoke(cli.cli_main, param)
             self.assertEqual(0, result.exit_code)
             self.assertTrue(os.path.exists(fname), fname + ' missing')
+            result = self.runner.invoke(cli.cli_main,
+                                        param + ['-f', '10', '-t', '20'])
+            self.assertEqual(0, result.exit_code)
+            self.assertTrue(os.path.exists(fname), fname + ' missing')
 
     def test_curve_parameters(self):
         '''Test curve parameter.'''
