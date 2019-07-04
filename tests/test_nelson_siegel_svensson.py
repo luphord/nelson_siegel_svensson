@@ -45,8 +45,14 @@ class TestNelson_siegel_svensson(unittest.TestCase):
         '''Test calibrate CLI.'''
         param = ['calibrate', '-t', json.dumps(self.t),
                  '-y', json.dumps(self.y)]
-        help_result = self.runner.invoke(cli.cli_main, param)
-        assert help_result.exit_code == 0
+        result = self.runner.invoke(cli.cli_main, param)
+        assert result.exit_code == 0
+        assert '0.0451' in result.output
+        first_output = result.output
+        result = self.runner.invoke(cli.cli_main,
+                                    param + ['--nelson-siegel-svensson'])
+        assert result.exit_code == 0
+        assert first_output == result.output
 
     def test_curve_parameters(self):
         '''Test curve parameter.'''
