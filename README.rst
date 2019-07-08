@@ -42,6 +42,89 @@ Features
 * Methods for zero and forward rates (as vectorized functions of time points)
 * Methods for the factors (as vectorized function of time points)
 * Calibration based on ordinary least squares (OLS) for betas and nonlinear optimization for taus
+* Simple command line interface (CLI) for evaluating, calibrating and plotting curves
+
+
+Calibration
+-----------
+
+In order to calibrate a curve to given data you can use the `calibrate_ns_ols` and
+`calibrate_nss_ols` functions in the `calibrate` module:
+
+.. code-block:: python
+
+        import numpy as np
+        from nelson_siegel_svensson.calibrate import calibrate_ns_ols
+
+        t = np.array([0.0, 0.5, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0])
+        y = np.array([0.01, 0.011, 0.013, 0.016, 0.019, 0.021, 0.026, 0.03, 0.035, 0.037, 0.038, 0.04])
+
+        curve, status = calibrate_ns_ols(t, y, tau0=1.0)  # starting value of 1.0 for the optimization of tau
+        assert status.success
+        print(curve)
+
+which gives the following output:
+
+.. code-block:: python
+
+        NelsonSiegelCurve(beta0=0.04201739383636799, beta1=-0.031829031569430594, beta2=-0.026797319779108236, tau=1.7170972656534174)
+
+.. image:: docs/_static/calibrated_nelson-siegel-curve.png
+
+
+Command Line interface
+----------------------
+
+`nelson_siegel_svensson` provides basic functionality using a command line interface (CLI):
+
+.. code-block:: console
+
+        Usage: nelson_siegel_svensson [OPTIONS] COMMAND [ARGS]...
+
+        Commandline interface for nelson_siegel_svensson.
+
+        Options:
+        --help  Show this message and exit.
+
+        Commands:
+        calibrate  Calibrate a curve to the given data points.
+        evaluate   Evaluate a curve at given points.
+        plot       Plot a curve at given points.
+
+
+In order to calibrate a curve to given data points on the command line, try
+
+.. code-block:: console
+
+        nelson_siegel_svensson calibrate -t '[0.0, 0.5, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0]' -y '[0.01, 0.011, 0.013, 0.016, 0.019, 0.021, 0.026, 0.03, 0.035, 0.037, 0.038, 0.04]' --nelson-siegel
+
+which gives
+
+.. code-block:: console
+
+        {"beta0": 0.04257148396759226, "beta1": -0.03264235709868573, "beta2": -0.022575588144507032, "tau": 2.0}
+
+This curve can then be evaluated on the command line using
+
+.. code-block:: console
+
+        nelson_siegel_svensson evaluate -c '{"beta0": 0.04257148396759226, "beta1": -0.03264235709868573, "beta2": -0.022575588144507032, "tau": 2.0}' -t '[0, 1, 2, 3]'
+
+resulting in
+
+.. code-block:: console
+
+        [0.009929126868906527, 0.012811133364554837, 0.015972180313818436, 0.019010674380379816]
+
+And finally, the curve can be plotted with
+
+.. code-block:: console
+
+        nelson_siegel_svensson plot -o cli_plot_example.png -c '{"beta0": 0.04257148396759226, "beta1": -0.03264235709868573, "beta2": -0.022575588144507032, "tau": 2.0}'
+
+.. image:: docs/_static/cli_plot_example.png
+
+Note that the quoting in the above commands prevents `bash` from evalutating the JSON-based parameters. Depending on your shell, you may require a different quoting mechanism.
 
 Credits
 -------
