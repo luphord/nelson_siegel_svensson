@@ -88,10 +88,12 @@ def cli_evaluate(curve, times):
 
 
 @click.command(name='plot')
-@click.option('-c', '--curve',
+@click.option('-c', '--curves',
               type=Curve(),
               required=True,
-              help='Parameters for curve as JSON object.')
+              multiple=True,
+              help='Parameters for curve as JSON object; ' +
+                    'accepts multiple curves.')
 @click.option('-o', '--output',
               type=click.Path(file_okay=True, dir_okay=False,
                               writable=True, resolve_path=True),
@@ -107,12 +109,13 @@ def cli_evaluate(curve, times):
               default=30.0,
               show_default=True,
               help='Right time point of the plot.')
-def cli_plot(curve, output, from_time, to_time):
-    '''Plot a curve at given points'''
+def cli_plot(curves, output, from_time, to_time):
+    '''Plot a curve at given points.'''
     fig, ax = plt.subplots(nrows=1, ncols=1)
     t = np.linspace(from_time, to_time, num=100)
-    y = curve(t)
-    ax.plot(t, y)
+    for curve in curves:
+        y = curve(t)
+        ax.plot(t, y)
     fig.savefig(output)
     plt.close(fig)
 
