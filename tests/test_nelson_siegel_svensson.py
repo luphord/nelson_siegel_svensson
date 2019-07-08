@@ -59,6 +59,11 @@ class TestNelson_siegel_svensson(unittest.TestCase):
                                     param + ['--nelson-siegel'])
         self.assertEqual(0, result.exit_code)
         self.assertIn('0.0425', result.output)
+        result = self.runner.invoke(cli.cli_main,
+                                    param + ['--nelson-siegel',
+                                             '--initial-tau1', '1.234'])
+        self.assertEqual(0, result.exit_code)
+        self.assertIn('0.04179', result.output)
 
     def test_cli_plot(self):
         '''Test plot CLI.'''

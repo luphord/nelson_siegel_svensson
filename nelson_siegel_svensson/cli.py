@@ -63,12 +63,26 @@ def cli_main(args=None):
               help='whether to calibrate a Nelson-Siegel-Svensson (4 factor)' +
                    ' or a Nelson-Siegel (3 factor) curve. Defaults to' +
                    ' the former.')
-def cli_calibrate(times, values, nelson_siegel_svensson):
+@click.option('--initial-tau1',
+              type=click.FLOAT,
+              default=2.0,
+              show_default=True,
+              help='Initial value of tau1 (or tau for Nelson-Siegel) ' +
+                   'for optimization.')
+@click.option('--initial-tau2',
+              type=click.FLOAT,
+              default=5.0,
+              show_default=True,
+              help='Initial value of tau2 (ignored by Nelson-Siegel) ' +
+                   'for optimization.')
+def cli_calibrate(times, values, nelson_siegel_svensson,
+                  initial_tau1, initial_tau2):
     '''Calibrate a curve to the given data points.'''
     if nelson_siegel_svensson:
-        curve, status = calibrate_nss_ols(times, values)
+        curve, status = calibrate_nss_ols(times, values,
+                                          (initial_tau1, initial_tau2))
     else:
-        curve, status = calibrate_ns_ols(times, values)
+        curve, status = calibrate_ns_ols(times, values, initial_tau1)
     assert status.success
     click.echo(json.dumps(vars(curve)))
 
