@@ -2,8 +2,8 @@
 History
 =======
 
-0.4.0 (not yet)
----------------
+0.4.0 (2019-07-08)
+------------------
 
 * Simple command line interface (CLI) supporting curve evaluation, calibration and plotting
 * Added more documentation
