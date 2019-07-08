@@ -96,31 +96,31 @@ In order to calibrate a curve to given data points on the command line, try
 
 .. code-block:: console
 
-        nelson_siegel_svensson calibrate -t '[0.0, 0.5, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0]' -y '[0.01, 0.011, 0.013, 0.016, 0.019, 0.021, 0.026, 0.03, 0.035, 0.037, 0.038, 0.04]' --nelson-siegel
+        nelson_siegel_svensson calibrate -t '[0.0, 0.5, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0]' -y '[0.01, 0.011, 0.013, 0.016, 0.019, 0.021, 0.026, 0.03, 0.035, 0.037, 0.038, 0.04]' --nelson-siegel --initial-tau1 1.0
 
 which gives
 
 .. code-block:: console
 
-        {"beta0": 0.04257148396759226, "beta1": -0.03264235709868573, "beta2": -0.022575588144507032, "tau": 2.0}
+        {"beta0": 0.042017393764903765, "beta1": -0.03182903146166806, "beta2": -0.026797320316066128, "tau": 1.717097232403383}
 
 This curve can then be evaluated on the command line using
 
 .. code-block:: console
 
-        nelson_siegel_svensson evaluate -c '{"beta0": 0.04257148396759226, "beta1": -0.03264235709868573, "beta2": -0.022575588144507032, "tau": 2.0}' -t '[0, 1, 2, 3]'
+        nelson_siegel_svensson evaluate -c '{"beta0": 0.042017393764903765, "beta1": -0.03182903146166806, "beta2": -0.026797320316066128, "tau": 1.717097232403383}' -t '[0, 1, 2, 3]'
 
 resulting in
 
 .. code-block:: console
 
-        [0.009929126868906527, 0.012811133364554837, 0.015972180313818436, 0.019010674380379816]
+        [0.010188362303235707, 0.012547870204470839, 0.01574855552855885, 0.01897955804146046]
 
 And finally, the curve can be plotted with
 
 .. code-block:: console
 
-        nelson_siegel_svensson plot -o cli_plot_example.png -c '{"beta0": 0.04257148396759226, "beta1": -0.03264235709868573, "beta2": -0.022575588144507032, "tau": 2.0}'
+        nelson_siegel_svensson plot -o cli_plot_example.png -c '{"beta0": 0.042017393764903765, "beta1": -0.03182903146166806, "beta2": -0.026797320316066128, "tau": 1.717097232403383}'
 
 .. image:: docs/_static/cli_plot_example.png
 
