@@ -2,6 +2,12 @@
 History
 =======
 
+0.4.1 (2019-11-14)
+------------------
+
+* Added return type annotations for core modules
+* Added some example notebooks
+
 0.4.0 (2019-07-08)
 ------------------
 
