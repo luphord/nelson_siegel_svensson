@@ -6,7 +6,7 @@ See `NelsonSiegelSvenssonCurve` class for details.
 
 from numbers import Real
 from dataclasses import dataclass
-from typing import Union
+from typing import Union, Tuple
 
 import numpy as np
 from numpy import exp
@@ -28,7 +28,9 @@ class NelsonSiegelSvenssonCurve:
     tau1: float
     tau2: float
 
-    def factors(self, T: Union[Real, np.ndarray]):
+    def factors(self, T: Union[Real, np.ndarray]) \
+            -> Union[Tuple[Real, Real, Real],
+                     Tuple[np.ndarray, np.ndarray, np.ndarray]]:
         '''Factor loadings for time(s) T, excluding constant.'''
         tau1 = self.tau1
         tau2 = self.tau2
@@ -49,7 +51,8 @@ class NelsonSiegelSvenssonCurve:
             factor3[zero_idx] = 0
         return factor1, factor2, factor3
 
-    def factor_matrix(self, T: Union[Real, np.ndarray]):
+    def factor_matrix(self, T: Union[Real, np.ndarray]) \
+            -> Union[Real, np.ndarray]:
         '''Factor loadings for time(s) T as matrix columns,
            including constant column (=1.0).
         '''
@@ -57,7 +60,7 @@ class NelsonSiegelSvenssonCurve:
         constant = np.ones(T.size) if isinstance(T, np.ndarray) else 1
         return np.stack([constant, factor1, factor2, factor3]).transpose()
 
-    def zero(self, T: Union[Real, np.ndarray]):
+    def zero(self, T: Union[Real, np.ndarray]) -> Union[Real, np.ndarray]:
         '''Zero rate(s) of this curve at time(s) T.'''
         beta0 = self.beta0
         beta1 = self.beta1
@@ -67,11 +70,11 @@ class NelsonSiegelSvenssonCurve:
         res = beta0 + beta1*factor1 + beta2*factor2 + beta3*factor3
         return res
 
-    def __call__(self, T: Union[Real, np.ndarray]):
+    def __call__(self, T: Union[Real, np.ndarray]) -> Union[Real, np.ndarray]:
         '''Zero rate(s) of this curve at time(s) T.'''
         return self.zero(T)
 
-    def forward(self, T: Union[Real, np.ndarray]):
+    def forward(self, T: Union[Real, np.ndarray]) -> Union[Real, np.ndarray]:
         '''Instantaneous forward rate(s) of this curve at time(s) T.'''
         exp_tt0 = exp(-T/self.tau1)
         exp_tt1 = exp(-T/self.tau2)
