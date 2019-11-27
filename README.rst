@@ -31,6 +31,7 @@ Implementation of the Nelson-Siegel-Svensson interest rate curve model in Python
 .. image:: docs/_static/an_example_nelson-siegel-svensson-curve.png
 
 * Free software: MIT license
+* Python 3.7 or later supported
 * Documentation: https://nelson-siegel-svensson.readthedocs.io.
 
 
