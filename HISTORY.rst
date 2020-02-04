@@ -2,6 +2,12 @@
 History
 =======
 
+0.4.2 (2020-02-04)
+------------------
+
+* Support Python 3.8
+* Upgrade flake8 (test requirement) as prior version did not support Python 3.8
+
 0.4.1 (2019-11-14)
 ------------------
 
