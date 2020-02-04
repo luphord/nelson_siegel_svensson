@@ -43,7 +43,7 @@ def errorfn_ns_ols(tau: float, t: np.ndarray, y: np.ndarray) -> float:
     return np.sum((curve(t) - y)**2)
 
 
-def calibrate_ns_ols(t: np.ndarray, y: np.ndarray, tau0: float=2.0) \
+def calibrate_ns_ols(t: np.ndarray, y: np.ndarray, tau0: float = 2.0) \
       -> Tuple[NelsonSiegelCurve, Any]:
     '''Calibrate a Nelson-Siegel curve to time-value pairs
        t and y, by optimizing tau and chosing all betas
@@ -90,7 +90,7 @@ def errorfn_nss_ols(tau: Tuple[float, float], t: np.ndarray, y: np.ndarray) \
 
 
 def calibrate_nss_ols(t: np.ndarray, y: np.ndarray,
-                      tau0: Tuple[float, float]=(2.0, 5.0)) \
+                      tau0: Tuple[float, float] = (2.0, 5.0)) \
       -> Tuple[NelsonSiegelSvenssonCurve, Any]:
     '''Calibrate a Nelson-Siegel-Svensson curve to time-value
        pairs t and y, by optimizing tau1 and tau2 and chosing
