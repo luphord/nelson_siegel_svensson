@@ -2,6 +2,12 @@
 History
 =======
 
+0.4.3 (waiting for Python 3.9 on travis-ci.com)
+-----------------------------------------------
+
+* Support Python 3.9
+* Migrate to travis-ci.com
+
 0.4.2 (2020-02-04)
 ------------------
 
