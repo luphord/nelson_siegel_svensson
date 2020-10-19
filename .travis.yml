@@ -15,4 +15,4 @@ install:
 script:
   - mypy --config-file mypy.ini nelson_siegel_svensson tests
   - flake8 nelson_siegel_svensson tests
-  - python setup.py test
+  - python -m unittest discover tests -v
