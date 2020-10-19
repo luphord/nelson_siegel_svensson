@@ -5,7 +5,7 @@ dist: focal
 python:
   - 3.7
   - 3.8
-  - 3.9
+  - 3.9-dev # proper 3.9 is not yet available
 
 # Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
