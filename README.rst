@@ -6,6 +6,9 @@ Nelson-Siegel-Svensson Model
 .. image:: https://img.shields.io/pypi/v/nelson_siegel_svensson.svg
         :target: https://pypi.python.org/pypi/nelson_siegel_svensson
 
+.. image:: https://github.com/luphord/nelson_siegel_svensson/actions/workflows/python-package.yml/badge.svg
+        :target: https://github.com/luphord/nelson_siegel_svensson/actions
+
 .. image:: https://readthedocs.org/projects/nelson-siegel-svensson/badge/?version=latest
         :target: https://nelson-siegel-svensson.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
