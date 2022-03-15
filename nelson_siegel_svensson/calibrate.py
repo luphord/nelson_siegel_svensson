@@ -20,7 +20,7 @@ def _assert_same_shape(t: np.ndarray, y: np.ndarray) -> None:
 
 
 def betas_ns_ols(tau: float, t: np.ndarray, y: np.ndarray) \
-      -> Tuple[NelsonSiegelCurve, Any]:
+        -> Tuple[NelsonSiegelCurve, Any]:
     '''Calculate the best-fitting beta-values given tau
        for time-value pairs t and y and return a corresponding
        Nelson-Siegel curve instance.
@@ -44,7 +44,7 @@ def errorfn_ns_ols(tau: float, t: np.ndarray, y: np.ndarray) -> float:
 
 
 def calibrate_ns_ols(t: np.ndarray, y: np.ndarray, tau0: float = 2.0) \
-      -> Tuple[NelsonSiegelCurve, Any]:
+        -> Tuple[NelsonSiegelCurve, Any]:
     '''Calibrate a Nelson-Siegel curve to time-value pairs
        t and y, by optimizing tau and chosing all betas
        using ordinary least squares.
@@ -56,14 +56,14 @@ def calibrate_ns_ols(t: np.ndarray, y: np.ndarray, tau0: float = 2.0) \
 
 
 def empirical_factors(y_3m: float, y_2y: float, y_10y: float) \
-      -> Tuple[float, float, float]:
+        -> Tuple[float, float, float]:
     '''Calculate the empirical factors according to
        Diebold and Li (2006).'''
     return y_10y, y_10y - y_3m, 2*y_2y - y_3m - y_10y
 
 
 def betas_nss_ols(tau: Tuple[float, float], t: np.ndarray, y: np.ndarray) \
-      -> Tuple[NelsonSiegelSvenssonCurve, Any]:
+        -> Tuple[NelsonSiegelSvenssonCurve, Any]:
     '''Calculate the best-fitting beta-values given tau (= array of tau1
        and tau2) for time-value pairs t and y and return a corresponding
        Nelson-Siegel-Svensson curve instance.
@@ -78,7 +78,7 @@ def betas_nss_ols(tau: Tuple[float, float], t: np.ndarray, y: np.ndarray) \
 
 
 def errorfn_nss_ols(tau: Tuple[float, float], t: np.ndarray, y: np.ndarray) \
-      -> float:
+        -> float:
     '''Sum of squares error function for a Nelson-Siegel-Svensson
        model and time-value pairs t and y. All betas are obtained
        by ordinary least squares given tau (= array of tau1
@@ -91,7 +91,7 @@ def errorfn_nss_ols(tau: Tuple[float, float], t: np.ndarray, y: np.ndarray) \
 
 def calibrate_nss_ols(t: np.ndarray, y: np.ndarray,
                       tau0: Tuple[float, float] = (2.0, 5.0)) \
-      -> Tuple[NelsonSiegelSvenssonCurve, Any]:
+        -> Tuple[NelsonSiegelSvenssonCurve, Any]:
     '''Calibrate a Nelson-Siegel-Svensson curve to time-value
        pairs t and y, by optimizing tau1 and tau2 and chosing
        all betas using ordinary least squares. This method does
