@@ -2,8 +2,15 @@
 History
 =======
 
+0.5.0 (not yet)
+---------------
+
+* Support Python 3.9
+* Reformat code with black
+* Upgrade dependencies
+
 0.4.3 (2022-03-15)
------------------------------------------------
+------------------
 
 * Migrate to GitHub Actions
 
