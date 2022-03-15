@@ -5,20 +5,23 @@ import unittest
 import numpy as np
 
 from nelson_siegel_svensson import NelsonSiegelCurve
-from nelson_siegel_svensson.calibrate import betas_ns_ols, errorfn_ns_ols, \
-                                        calibrate_ns_ols
+from nelson_siegel_svensson.calibrate import (
+    betas_ns_ols,
+    errorfn_ns_ols,
+    calibrate_ns_ols,
+)
 
 
 class TestNelsonSiegelCurveCalibration(unittest.TestCase):
-    '''Tests for Nelson-Siegel curve calibration.'''
+    """Tests for Nelson-Siegel curve calibration."""
 
     def setUp(self):
         self.y = NelsonSiegelCurve(0.017, -0.023, 0.24, 2.2)
 
     def test_nelson_siegel_betas_recovery(self):
-        '''Test recovery of betas using ordinary least squares
-           (given fixed tau).
-        '''
+        """Test recovery of betas using ordinary least squares
+        (given fixed tau).
+        """
         t = np.linspace(0, 30)
         y_target = self.y(t)
         curve, lstsq_res = betas_ns_ols(self.y.tau, t, y_target)
@@ -27,7 +30,7 @@ class TestNelsonSiegelCurveCalibration(unittest.TestCase):
         self.assertAlmostEqual(self.y.beta2, curve.beta2, places=12)
 
     def test_nelson_siegel_ols_errorfn_for_correct_tau(self):
-        '''Test ols based error function for correct tau.'''
+        """Test ols based error function for correct tau."""
         t = np.linspace(0, 30)
         y_target = self.y(t)
         error = errorfn_ns_ols(self.y.tau, t, y_target)
@@ -36,7 +39,7 @@ class TestNelsonSiegelCurveCalibration(unittest.TestCase):
         self.assertNotAlmostEqual(0.0, error2)
 
     def test_nelson_siegel_ols_calibration(self):
-        '''Test ols based calibration of Nelson-Siegel model.'''
+        """Test ols based calibration of Nelson-Siegel model."""
         t = np.linspace(0, 30)
         y_target = self.y(t)
         y_hat, opt_res = calibrate_ns_ols(t, y_target, tau0=self.y.tau)
