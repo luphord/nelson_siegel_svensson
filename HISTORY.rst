@@ -2,11 +2,10 @@
 History
 =======
 
-0.4.3 (waiting for Python 3.9 on travis-ci.com)
+0.4.3 (2022-03-15)
 -----------------------------------------------
 
-* Support Python 3.9 (not available on travis-ci.com yet)
-* Migrate to travis-ci.com
+* Migrate to GitHub Actions
 
 0.4.2 (2020-02-04)
 ------------------
