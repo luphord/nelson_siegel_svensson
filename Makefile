@@ -55,6 +55,10 @@ type: ## run mypy type checks
 
 lint: ## check style with flake8
 	flake8 nelson_siegel_svensson tests
+	black --check .
+
+format:
+	black .
 
 test: ## run tests quickly with the default Python
 	python -m unittest discover . -v
