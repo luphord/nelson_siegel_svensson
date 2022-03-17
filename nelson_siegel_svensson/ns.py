@@ -27,8 +27,8 @@ class NelsonSiegelCurve:
     tau: float
 
     def factors(
-        self, T: Union[Real, np.ndarray]
-    ) -> Union[Tuple[Real, Real], Tuple[np.ndarray, np.ndarray]]:
+        self, T: Union[float, np.ndarray]
+    ) -> Union[Tuple[float, float], Tuple[np.ndarray, np.ndarray]]:
         """Factor loadings for time(s) T, excluding constant."""
         tau = self.tau
         if isinstance(T, Real) and T <= 0:
@@ -45,24 +45,26 @@ class NelsonSiegelCurve:
             factor2[zero_idx] = 0
         return factor1, factor2
 
-    def factor_matrix(self, T: Union[Real, np.ndarray]) -> Union[Real, np.ndarray]:
+    def factor_matrix(self, T: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Factor loadings for time(s) T as matrix columns,
         including constant column (=1.0).
         """
         factor1, factor2 = self.factors(T)
-        constant = np.ones(T.size) if isinstance(T, np.ndarray) else 1
+        constant: Union[float, np.ndarray] = (
+            np.ones(T.size) if isinstance(T, np.ndarray) else 1
+        )
         return np.stack([constant, factor1, factor2]).transpose()
 
-    def zero(self, T: Union[Real, np.ndarray]) -> Union[Real, np.ndarray]:
+    def zero(self, T: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Zero rate(s) of this curve at time(s) T."""
         factor1, factor2 = self.factors(T)
         return self.beta0 + self.beta1 * factor1 + self.beta2 * factor2
 
-    def __call__(self, T: Union[Real, np.ndarray]) -> Union[Real, np.ndarray]:
+    def __call__(self, T: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Zero rate(s) of this curve at time(s) T."""
         return self.zero(T)
 
-    def forward(self, T: Union[Real, np.ndarray]) -> Union[Real, np.ndarray]:
+    def forward(self, T: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Instantaneous forward rate(s) of this curve at time(s) T."""
         exp_tt0 = exp(-T / self.tau)
         return self.beta0 + self.beta1 * exp_tt0 + self.beta2 * exp_tt0 * T / self.tau

@@ -103,7 +103,6 @@ def calibrate_nss_ols(
     not work well regarding the recovery of true parameters.
     """
     _assert_same_shape(t, y)
-    tau0 = np.array(tau0)
-    opt_res = minimize(errorfn_nss_ols, x0=tau0, args=(t, y))
+    opt_res = minimize(errorfn_nss_ols, x0=np.array(tau0), args=(t, y))
     curve, lstsq_res = betas_nss_ols(opt_res.x, t, y)
     return curve, opt_res
