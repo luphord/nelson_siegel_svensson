@@ -8,6 +8,7 @@ History
 * Support Python 3.9 and 3.10
 * Reformat code with black
 * Upgrade dependencies
+* Upgrade development status to beta
 
 0.4.3 (2022-03-15)
 ------------------
