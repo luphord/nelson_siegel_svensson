@@ -3,6 +3,7 @@
 import unittest
 
 import numpy as np
+from scipy.optimize import minimize
 
 from nelson_siegel_svensson import NelsonSiegelSvenssonCurve
 from nelson_siegel_svensson.calibrate import (
@@ -67,3 +68,14 @@ class TestNelsonSiegelSvenssonCurveCalibration(unittest.TestCase):
         self.assertAlmostEqual(self.y.beta3, y_hat.beta3, places=places_beta)
         self.assertAlmostEqual(self.y.tau1, y_hat.tau1, places=places_tau)
         self.assertAlmostEqual(self.y.tau2, y_hat.tau2, places=places_tau)
+
+    def test_nelson_siegel_svensson_inverted_tau_starting_values(self):
+        """Test the effect of inverting the starting values for tau1/2
+        on calibration."""
+        t = np.linspace(0, 30)
+        y_target = self.y(t)
+        tau0 = (0.5, 2)
+        tau_hat_1 = minimize(errorfn_nss_ols, x0=tau0, args=(t, y_target)).x
+        tau_hat_2 = minimize(errorfn_nss_ols, x0=tau0[::-1], args=(t, y_target)).x
+        self.assertLess(tau_hat_1[0], tau_hat_1[1])
+        self.assertGreater(tau_hat_2[0], tau_hat_2[1])
