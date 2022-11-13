@@ -6,7 +6,7 @@ For details, see classes `NelsonSiegelCurve` and `NelsonSiegelSvenssonCurve`.
 
 __author__ = """luphord"""
 __email__ = "luphord@protonmail.com"
-__version__ = "0.4.3"
+__version__ = "0.5.0"
 
 from .ns import NelsonSiegelCurve
 from .nss import NelsonSiegelSvenssonCurve
